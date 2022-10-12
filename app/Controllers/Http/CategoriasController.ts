@@ -6,7 +6,7 @@ export default class CategoriasController {
         return Categoria.all()
     }
     store({request}){
-        const dados = request.only(['cpf', 'nome', 'telefone', 'sexo'])
+        const dados = request.only(['categoria'])
 
         return Categoria.create(dados)
     }
@@ -23,7 +23,7 @@ export default class CategoriasController {
         const id = request.param('id')
         const categoria = await Categoria.findOrFail(id)
 
-        const dados = request.only(['cpf', 'nome', 'telefone', 'sexo'])
+        const dados = request.only(['categoria'])
         
         categoria.merge(dados).save()
 
