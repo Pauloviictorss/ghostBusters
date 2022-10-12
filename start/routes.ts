@@ -10,4 +10,5 @@ Route.get('/rota1', async () => {
 
 Route.resource('/cliente', 'ClientesController').apiOnly()
 Route.resource('/promo', 'PromosController').apiOnly()
-Route.resource('/cargo', 'PromosController').apiOnly()
+Route.resource('/cargo', 'CargosController').apiOnly()
+Route.resource('/funcionario', 'FuncionariosController').apiOnly()
