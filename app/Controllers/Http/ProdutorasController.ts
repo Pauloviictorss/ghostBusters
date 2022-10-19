@@ -23,7 +23,7 @@ export default class CategoriasController {
         const id = request.param('id')
         const produtora = await Produtora.findOrFail(id)
 
-        const dados = request.only(['produtora'])
+        const dados = request.only(['nome'])
         
         produtora.merge(dados).save()
 
