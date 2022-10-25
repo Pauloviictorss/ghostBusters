@@ -8,7 +8,7 @@ export default class ClientesController {
 
         const cliente = Cliente.query()
                              .select(['id', 'cpf', 'nome', 'telefone', 'sexo'])
-                             //.preload('album')
+                             .preload('alugados')
                              //.preload('playlistmusicas')
 
         if(nome){

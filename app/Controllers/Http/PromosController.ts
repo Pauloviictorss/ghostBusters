@@ -7,7 +7,7 @@ export default class PromosController {
 
         const promo = Promo.query()
                              .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
-                             //.preload('album')
+                             .preload('filmes')
                              //.preload('playlistmusicas')
 
         if(nome){

@@ -7,8 +7,10 @@ export default class FilmesController {
 
         const filme = Filme.query()
                              .select(['id', 'nome', 'preco', 'avaliacao', 'dataLancamento', 'promoId', 'produtoraId'])
-                             //.preload('album')
-                             //.preload('playlistmusicas')
+                             .preload('categorias')
+                             .preload('artistas')
+                             .preload('promocao')
+                             .preload('produtora')
 
         if(nome){
             filme.where('nome', nome)

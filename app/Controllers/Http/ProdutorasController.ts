@@ -7,7 +7,7 @@ export default class ProdutorasController {
 
         const produtora = Produtora.query()
                              .select(['id', 'nome'])
-                             //.preload('album')
+                             .preload('filmes')
                              //.preload('playlistmusicas')
 
         if(nome){

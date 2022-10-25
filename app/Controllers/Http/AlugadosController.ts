@@ -7,8 +7,8 @@ export default class AlugadosController {
 
         const alugado = Alugado.query()
                              .select(['id', 'retirada', 'entrega', 'tempoDias'])
-                             //.preload('album')
-                             //.preload('playlistmusicas')
+                             .preload('funcionario')
+                             .preload('cliente')
 
         if(retirada){
             alugado.where('retirada', retirada)

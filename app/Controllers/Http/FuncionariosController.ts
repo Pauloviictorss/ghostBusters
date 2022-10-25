@@ -7,8 +7,8 @@ export default class FuncionariosController {
 
         const funcionario = Funcionario.query()
                              .select(['id', 'cpf', 'nome', 'telefone', 'sexo', 'endereco', 'cargoId'])
-                             //.preload('album')
-                             //.preload('playlistmusicas')
+                             .preload('cargo')
+                             .preload('alugados')
 
         if(nome){
             funcionario.where('nome', nome)

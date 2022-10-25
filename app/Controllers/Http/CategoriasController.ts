@@ -7,7 +7,7 @@ export default class CategoriasController {
 
         const categoria = Categoria.query()
                              .select(['id', 'nome'])
-                             //.preload('album')
+                             .preload('filmes')
                              //.preload('playlistmusicas')
 
         if(nome){

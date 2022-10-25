@@ -7,7 +7,7 @@ export default class CargosController {
 
         const cargo = Cargo.query()
                              .select(['id', 'nome', 'salario'])
-                             //.preload('album')
+                             .preload('funcionarios')
                              //.preload('playlistmusicas')
 
         if(nome){

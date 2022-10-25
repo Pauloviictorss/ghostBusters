@@ -7,7 +7,7 @@ export default class ArtistasController {
 
         const artista = Artista.query()
                              .select(['id', 'nome', 'sexo'])
-                             //.preload('album')
+                             .preload('filmes')
                              //.preload('playlistmusicas')
 
         if(nome){
