@@ -1,9 +1,20 @@
 import Produtora from "App/Models/Produtora"
 
+export default class ProdutorasController {
+    index({request}){
 
-export default class CategoriasController {
-    index(){
-        return Produtora.all()
+        const {nome} = request.all()
+
+        const produtora = Produtora.query()
+                             .select(['id', 'nome'])
+                             //.preload('album')
+                             //.preload('playlistmusicas')
+
+        if(nome){
+            produtora.where('nome', nome)
+        }
+
+        return produtora
     }
     store({request}){
         const dados = request.only(['nome'])

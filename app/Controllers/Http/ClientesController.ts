@@ -2,8 +2,24 @@ import Cliente from "App/Models/Cliente"
 
 
 export default class ClientesController {
-    index(){
-        return Cliente.all()
+    index({request}){
+
+        const {nome, cpf} = request.all()
+
+        const cliente = Cliente.query()
+                             .select(['id', 'cpf', 'nome', 'telefone', 'sexo'])
+                             //.preload('album')
+                             //.preload('playlistmusicas')
+
+        if(nome){
+            cliente.where('nome', nome)
+        }
+
+        if(cpf){
+            cliente.where('cpf', cpf)
+        }
+
+        return cliente
     }
     store({request}){
         const dados = request.only(['cpf', 'nome', 'telefone', 'sexo'])

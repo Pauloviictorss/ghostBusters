@@ -1,8 +1,24 @@
 import Cargo from "App/Models/Cargo"
 
 export default class CargosController {
-    index(){
-        return Cargo.all()
+    index({request}){
+
+        const {nome, salario} = request.all()
+
+        const cargo = Cargo.query()
+                             .select(['id', 'nome', 'salario'])
+                             //.preload('album')
+                             //.preload('playlistmusicas')
+
+        if(nome){
+            cargo.where('nome', nome)
+        }
+
+        if(salario){
+            cargo.where('salario', salario)
+        }
+
+        return cargo
     }
     store({request}){
         const dados = request.only(['nome', 'salario'])

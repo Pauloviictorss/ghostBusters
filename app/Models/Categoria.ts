@@ -6,7 +6,7 @@ export default class Categoria extends BaseModel {
   public id: number
 
   @column()
-  public categoria: string
+  public nome: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
