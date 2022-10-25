@@ -11,6 +11,7 @@ export default class FilmesController {
                              .preload('artistas')
                              .preload('promocao')
                              .preload('produtora')
+                             .preload('alugado')
 
         if(nome){
             filme.where('nome', nome)

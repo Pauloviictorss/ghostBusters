@@ -9,6 +9,7 @@ export default class AlugadosController {
                              .select(['id', 'retirada', 'entrega', 'tempoDias'])
                              .preload('funcionario')
                              .preload('cliente')
+                             .preload('filme')
 
         if(retirada){
             alugado.where('retirada', retirada)
