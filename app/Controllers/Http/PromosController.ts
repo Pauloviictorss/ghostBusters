@@ -1,4 +1,5 @@
 import Promo from "App/Models/Promo"
+import PromoValidator from "App/Validators/PromoValidator"
 
 export default class PromosController {
     index({request}){
@@ -8,7 +9,6 @@ export default class PromosController {
         const promo = Promo.query()
                              .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
                              .preload('filmes')
-                             //.preload('playlistmusicas')
 
         if(nome){
             promo.where('nome', nome)
@@ -24,11 +24,12 @@ export default class PromosController {
 
         return promo
     }
-    store({request}){
-        const dados = request.only(['nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
-
+    
+    async store({request}){
+        const dados = await request.validate(PromoValidator)
         return Promo.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Promo.find(id)

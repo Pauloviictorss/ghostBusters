@@ -1,4 +1,5 @@
 import Artista from "App/Models/Artista"
+import ArtistaValidator from "App/Validators/ArtistaValidator"
 
 export default class ArtistasController {
     index({request}){
@@ -8,7 +9,6 @@ export default class ArtistasController {
         const artista = Artista.query()
                              .select(['id', 'nome', 'sexo'])
                              .preload('filmes')
-                             //.preload('playlistmusicas')
 
         if(nome){
             artista.where('nome', nome)
@@ -20,11 +20,12 @@ export default class ArtistasController {
 
         return artista
     }
-    store({request}){
-        const dados = request.only(['nome', 'sexo'])
 
+    async store({request}){
+        const dados = await request.validate(ArtistaValidator)
         return Artista.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Artista.find(id)

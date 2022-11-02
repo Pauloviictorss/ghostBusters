@@ -1,4 +1,5 @@
 import Cargo from "App/Models/Cargo"
+import CargoValidator from "App/Validators/CargoValidator"
 
 export default class CargosController {
     index({request}){
@@ -8,7 +9,6 @@ export default class CargosController {
         const cargo = Cargo.query()
                              .select(['id', 'nome', 'salario'])
                              .preload('funcionarios')
-                             //.preload('playlistmusicas')
 
         if(nome){
             cargo.where('nome', nome)
@@ -20,11 +20,12 @@ export default class CargosController {
 
         return cargo
     }
-    store({request}){
-        const dados = request.only(['nome', 'salario'])
-
+    
+    async store({request}){
+        const dados = await request.validate(CargoValidator)
         return Cargo.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Cargo.find(id)

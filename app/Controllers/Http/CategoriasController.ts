@@ -1,4 +1,5 @@
 import Categoria from "App/Models/Categoria"
+import CategoriaValidator from "App/Validators/CategoriaValidator"
 
 export default class CategoriasController {
     index({request}){
@@ -8,7 +9,6 @@ export default class CategoriasController {
         const categoria = Categoria.query()
                              .select(['id', 'nome'])
                              .preload('filmes')
-                             //.preload('playlistmusicas')
 
         if(nome){
             categoria.where('nome', nome)
@@ -16,11 +16,12 @@ export default class CategoriasController {
 
         return categoria
     }
-    store({request}){
-        const dados = request.only(['nome'])
-
+    
+    async store({request}){
+        const dados = await request.validate(CategoriaValidator)
         return Categoria.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Categoria.find(id)

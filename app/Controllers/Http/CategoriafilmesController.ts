@@ -1,4 +1,5 @@
 import Categoriafilme from "App/Models/Categoriafilme"
+import CategoriafilmeValidator from "App/Validators/CategoriafilmeValidator"
 
 export default class CategoriafilmesController {
     index({request}){
@@ -7,8 +8,6 @@ export default class CategoriafilmesController {
 
         const categoriafilme = Categoriafilme.query()
                              .select(['id', 'categoriaId', 'filmeId'])
-                             //.preload('album')
-                             //.preload('playlistmusicas')
 
         if(categoriaId){
             categoriafilme.where('categoriaId', categoriaId)
@@ -20,11 +19,12 @@ export default class CategoriafilmesController {
 
         return categoriafilme
     }
-    store({request}){
-        const dados = request.only(['categoriaId', 'filmeId'])
-
+    
+    async store({request}){
+        const dados = await request.validate(CategoriafilmeValidator)
         return Categoriafilme.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Categoriafilme.find(id)

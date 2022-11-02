@@ -1,4 +1,5 @@
 import Funcionario from "App/Models/Funcionario"
+import FuncionarioValidator from "App/Validators/FuncionarioValidator"
 
 export default class FuncionariosController {
     index({request}){
@@ -24,11 +25,12 @@ export default class FuncionariosController {
 
         return funcionario
     }
-    store({request}){
-        const dados = request.only(['cpf', 'nome', 'telefone', 'sexo', 'endereco', 'cargoId'])
 
+    async store({request}){
+        const dados = await request.validate(FuncionarioValidator)
         return Funcionario.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Funcionario.find(id)

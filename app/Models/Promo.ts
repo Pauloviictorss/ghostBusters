@@ -13,6 +13,9 @@ export default class Promo extends BaseModel {
 
   @column()
   public dias: string
+  
+  @column()
+  public promoId: number
 
   @column()
   public dataInicio: Date

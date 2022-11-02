@@ -1,4 +1,5 @@
 import Filmeartista from "App/Models/Filmeartista"
+import FilmeartistaValidator from "App/Validators/FilmeartistaValidator"
 
 export default class FilmeartistasController {
     index({request}){
@@ -7,8 +8,6 @@ export default class FilmeartistasController {
 
         const filmeartista = Filmeartista.query()
                              .select(['id', 'filmeId', 'artistaId'])
-                             //.preload('album')
-                             //.preload('playlistmusicas')
 
         if(filmeId){
             filmeartista.where('filmeId', filmeId)
@@ -20,11 +19,12 @@ export default class FilmeartistasController {
 
         return filmeartista
     }
-    store({request}){
-        const dados = request.only(['filmeId', 'artistaId'])
 
+    async store({request}){
+        const dados = await request.validate(FilmeartistaValidator)
         return Filmeartista.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Filmeartista.find(id)

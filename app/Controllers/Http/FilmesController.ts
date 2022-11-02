@@ -1,4 +1,5 @@
 import Filme from "App/Models/Filme"
+import FilmeValidator from "App/Validators/FilmeValidator"
 
 export default class FilmesController {
     index({request}){
@@ -23,11 +24,12 @@ export default class FilmesController {
 
         return filme
     }
-    store({request}){
-        const dados = request.only(['nome', 'preco', 'avaliacao', 'dataLancamento', 'promoId', 'produtoraId'])
-
+    
+    async store({request}){
+        const dados = await request.validate(FilmeValidator)
         return Filme.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Filme.find(id)

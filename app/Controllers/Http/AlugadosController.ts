@@ -1,4 +1,5 @@
 import Alugado from "App/Models/Alugado"
+import AlugadoValidator from "App/Validators/AlugadoValidator"
 
 export default class AlugadosController {
     index({request}){
@@ -25,11 +26,12 @@ export default class AlugadosController {
 
         return alugado
     }
-    store({request}){
-        const dados = request.only(['retirada', 'entrega', 'tempoDias', 'filmeId', 'funcionarioId', 'clienteId'])
 
+    async store({request}){
+        const dados = await request.validate(AlugadoValidator)
         return Alugado.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Alugado.find(id)

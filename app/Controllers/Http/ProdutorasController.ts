@@ -1,4 +1,5 @@
 import Produtora from "App/Models/Produtora"
+import ProdutoraValidator from "App/Validators/ProdutoraValidator"
 
 export default class ProdutorasController {
     index({request}){
@@ -8,7 +9,6 @@ export default class ProdutorasController {
         const produtora = Produtora.query()
                              .select(['id', 'nome'])
                              .preload('filmes')
-                             //.preload('playlistmusicas')
 
         if(nome){
             produtora.where('nome', nome)
@@ -16,11 +16,12 @@ export default class ProdutorasController {
 
         return produtora
     }
-    store({request}){
-        const dados = request.only(['nome'])
-
+    
+    async store({request}){
+        const dados = await request.validate(ProdutoraValidator)
         return Produtora.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Produtora.find(id)

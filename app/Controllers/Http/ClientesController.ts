@@ -1,4 +1,5 @@
 import Cliente from "App/Models/Cliente"
+import ClienteValidator from "App/Validators/ClienteValidator"
 
 
 export default class ClientesController {
@@ -9,7 +10,6 @@ export default class ClientesController {
         const cliente = Cliente.query()
                              .select(['id', 'cpf', 'nome', 'telefone', 'sexo'])
                              .preload('alugados')
-                             //.preload('playlistmusicas')
 
         if(nome){
             cliente.where('nome', nome)
@@ -21,11 +21,12 @@ export default class ClientesController {
 
         return cliente
     }
-    store({request}){
-        const dados = request.only(['cpf', 'nome', 'telefone', 'sexo'])
 
+    async store({request}){
+        const dados = await request.validate(ClienteValidator)
         return Cliente.create(dados)
     }
+
     show({request}){
         const id = request.param('id')
         return Cliente.find(id)
