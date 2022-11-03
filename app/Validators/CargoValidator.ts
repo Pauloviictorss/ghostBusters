@@ -12,5 +12,9 @@ export default class CargoValidator {
     salario: schema.string.optional(),
   })
 
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nome.maxLength': 'O nome do cargo deve ter, no máximo, {{options.maxLength }} caracteres.',
+    'nome.required': 'Esse campo é obrigatório.',
+    'nome.unique': 'Esse cargo já foi cadastrado, insira um novo cargo.',
+  }
 }

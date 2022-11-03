@@ -1,40 +1,47 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class FuncionarioValidator {
   constructor(protected ctx: HttpContextContract) {}
 
-  /*
-   * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
-   *
-   * For example:
-   * 1. The username must be of data type string. But then also, it should
-   *    not contain special characters or numbers.
-   *    ```
-   *     schema.string({}, [ rules.alpha() ])
-   *    ```
-   *
-   * 2. The email must be of data type string, formatted as a valid
-   *    email. But also, not used by any other user.
-   *    ```
-   *     schema.string({}, [
-   *       rules.email(),
-   *       rules.unique({ table: 'users', column: 'email' }),
-   *     ])
-   *    ```
-   */
-  public schema = schema.create({})
+  public schema = schema.create({
+    nome: schema.string([
+      rules.maxLength(50),
+      rules.alpha({
+        allow: ['space']
+      }),
+      rules.required(),
+    ]),
+    cpf: schema.string([
+      rules.regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/),
+      rules.unique({ table: 'funcionarios', column: 'cpf' })
+    ]),
+    telefone: schema.string.optional(),
+    endereco: schema.string([
+      rules.maxLength(50),
+      rules.required(),
+    ]),
+    sexo: schema.enum(
+      ['H', 'M'] as const
+    ),
+    cargoId: schema.number([
+      rules.exists({ table: 'cargos', column: 'id' })
+    ])
+  })
 
-  /**
-   * Custom messages for validation failures. You can make use of dot notation `(.)`
-   * for targeting nested fields and array expressions `(*)` for targeting all
-   * children of an array. For example:
-   *
-   * {
-   *   'profile.username.required': 'Username is required',
-   *   'scores.*.number': 'Define scores as valid numbers'
-   * }
-   *
-   */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nome.maxLength': 'O nome do funcionário só pode ter {{options.maxLength }} caracteres.',
+    'nome.required': 'Esse campo é obrigatório.',
+
+    'endereco.maxLength': 'O endereço só pode ter {{options.maxLength }} caracteres.',
+    'endereco.required': 'Esse campo é obrigatório.',
+
+    'cpf.regex': 'O padrão de CPF é 999.999.999-99',
+    'cpf.unique': 'Já existe um cliente cadastrado com esse CPF.',
+
+    'sexo.enum': 'Essa informação não é válida. Insira de acordo com as opções. Opções disponíveis:',
+
+    'cargoId.exists': 'Antes você precisa inserir um cargo.',
+  }
+
 }

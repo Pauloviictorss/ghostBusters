@@ -1,40 +1,53 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class FilmeValidator {
   constructor(protected ctx: HttpContextContract) {}
 
-  /*
-   * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
-   *
-   * For example:
-   * 1. The username must be of data type string. But then also, it should
-   *    not contain special characters or numbers.
-   *    ```
-   *     schema.string({}, [ rules.alpha() ])
-   *    ```
-   *
-   * 2. The email must be of data type string, formatted as a valid
-   *    email. But also, not used by any other user.
-   *    ```
-   *     schema.string({}, [
-   *       rules.email(),
-   *       rules.unique({ table: 'users', column: 'email' }),
-   *     ])
-   *    ```
-   */
-  public schema = schema.create({})
+  public schema = schema.create({
+    nome: schema.string([
+      rules.maxLength(50),
+      rules.required()
+    ]),
+    preco: schema.string([
+      rules.maxLength(20),
+    ]),
+    avaliacao: schema.number([
+      rules.required(),
+      rules.range(0, 5),
+    ]),
+    dataLancamento: schema.date({
+      format: 'dd-MM-yyyy',
+    }, [
+      rules.required(),
+      rules.before('today')
+    ]),
+    promoId: schema.number([
+      rules.required(),
+      rules.exists({ table: 'promos', column: 'id' }),
+    ]),
+    produtoraId: schema.number([
+      rules.required(),
+      rules.exists({ table: 'produtoras', column: 'id' }),
+    ]),
+  })
 
-  /**
-   * Custom messages for validation failures. You can make use of dot notation `(.)`
-   * for targeting nested fields and array expressions `(*)` for targeting all
-   * children of an array. For example:
-   *
-   * {
-   *   'profile.username.required': 'Username is required',
-   *   'scores.*.number': 'Define scores as valid numbers'
-   * }
-   *
-   */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nome.maxLength': 'O nome do filme só pode ter {{options.maxLength }} caracteres.',
+    'nome.required': 'Esse campo é obrigatório.',
+
+    'preco.maxLength': 'O preço só pode ter {{options.maxLength }} caracteres.',
+
+    'avaliacao.range': 'A avaliação deve ser um número entre {{ options.start }} e {{ options.stop }}.',
+
+    'dataLancamento.required': 'O campo data de lançamento é obrigatório.',
+    'dataLancamento.before': 'A data de lançamento deve ser menor do que o dia atual.',
+    'dataLancamento.format': 'O formato de data é dd-mm-yyyy.',
+
+    'promoId.required': 'Informe o campo de ID da promoção!',
+    'promoId.exists': 'Antes você precisa inserir um promoção.',
+
+    'produtoraId.required': 'Informe o campo de ID da produtora!',
+    'produtoraId.exists': 'Antes você precisa inserir um produtora.',
+  }
 }

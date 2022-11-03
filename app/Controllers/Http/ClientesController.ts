@@ -4,18 +4,14 @@ import ClienteValidator from "App/Validators/ClienteValidator"
 
 export default class ClientesController {
     index({request}){
-
         const {nome, cpf} = request.all()
-
         const cliente = Cliente.query()
-                             .select(['id', 'cpf', 'nome', 'telefone', 'sexo'])
-                             .preload('alugados')
+                               .select(['id', 'cpf', 'nome', 'telefone', 'sexo'])
+                               .preload('alugados')
 
         if(nome){
             cliente.where('nome', nome)
-        }
-
-        if(cpf){
+        } else if(cpf){
             cliente.where('cpf', cpf)
         }
 
@@ -31,19 +27,18 @@ export default class ClientesController {
         const id = request.param('id')
         return Cliente.find(id)
     }
+
     async destroy({request}){
         const id = request.param('id')
         const cliente = await Cliente.findOrFail(id)
         return cliente.delete()
     }
+
     async update({request}){
         const id = request.param('id')
         const cliente = await Cliente.findOrFail(id)
-
         const dados = request.only(['cpf', 'nome', 'telefone', 'sexo'])
-        
         cliente.merge(dados).save()
-
         return dados
     }
 }

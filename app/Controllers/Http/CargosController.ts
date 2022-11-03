@@ -3,18 +3,14 @@ import CargoValidator from "App/Validators/CargoValidator"
 
 export default class CargosController {
     index({request}){
-
         const {nome, salario} = request.all()
-
         const cargo = Cargo.query()
-                             .select(['id', 'nome', 'salario'])
-                             .preload('funcionarios')
+                           .select(['id', 'nome', 'salario'])
+                           .preload('funcionarios')
 
         if(nome){
             cargo.where('nome', nome)
-        }
-
-        if(salario){
+        } else if(salario){
             cargo.where('salario', salario)
         }
 
@@ -30,19 +26,18 @@ export default class CargosController {
         const id = request.param('id')
         return Cargo.find(id)
     }
+
     async destroy({request}){
         const id = request.param('id')
         const cargo = await Cargo.findOrFail(id)
         return cargo.delete()
     }
+
     async update({request}){
         const id = request.param('id')
         const cargo = await Cargo.findOrFail(id)
-
         const dados = request.only(['nome', 'salario'])
-        
         cargo.merge(dados).save()
-
         return dados
     }
 }

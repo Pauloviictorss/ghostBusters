@@ -8,10 +8,10 @@ export default class extends BaseSchema {
       table.increments('id')
 
       table.string('cpf').notNullable()
-      table.string('nome').notNullable()
+      table.string('nome', 50).notNullable()
       table.string('telefone').notNullable()
-      table.string('sexo', 1)
-      table.string('endereco')
+      table.string('sexo')
+      table.string('endereco', 50)
       table.integer('cargo_id').unsigned().references('id').inTable('cargos')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

@@ -7,8 +7,8 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.string('nome').notNullable()
-      table.string('salario').notNullable()
+      table.string('nome', 20).notNullable()
+      table.string('salario')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

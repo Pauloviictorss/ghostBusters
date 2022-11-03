@@ -3,22 +3,16 @@ import PromoValidator from "App/Validators/PromoValidator"
 
 export default class PromosController {
     index({request}){
-
         const {nome, dataInicio, dataFim} = request.all()
-
         const promo = Promo.query()
                              .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
                              .preload('filmes')
 
         if(nome){
             promo.where('nome', nome)
-        }
-
-        if(dataInicio){
+        } else if(dataInicio){
             promo.where('dataInicio', dataInicio)
-        }
-
-        if(dataFim){
+        } else if(dataFim){
             promo.where('dataFim', dataFim)
         }
 
@@ -34,19 +28,18 @@ export default class PromosController {
         const id = request.param('id')
         return Promo.find(id)
     }
+
     async destroy({request}){
         const id = request.param('id')
         const promo = await Promo.findOrFail(id)
         return promo.delete()
     }
+
     async update({request}){
         const id = request.param('id')
         const promo = await Promo.findOrFail(id)
-
         const dados = request.only(['nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
-        
         promo.merge(dados).save()
-
         return dados
     }
 }
