@@ -8,9 +8,9 @@ export default class extends BaseSchema {
       table.increments('id')
 
       table.string('cpf').notNullable()
-      table.string('nome').notNullable()
+      table.string('nome', 50).notNullable()
       table.string('telefone')
-      table.string('sexo', 1).notNullable()
+      table.string('sexo').notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

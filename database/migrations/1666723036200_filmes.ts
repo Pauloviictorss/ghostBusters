@@ -7,8 +7,8 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.string('nome').notNullable()
-      table.string('preco').notNullable()
+      table.string('nome', 50).notNullable()
+      table.string('preco', 20).notNullable()
       table.float('avaliacao')
       table.date('data_lancamento')
       table.integer('promo_id').unsigned().references('id').inTable('promos')
