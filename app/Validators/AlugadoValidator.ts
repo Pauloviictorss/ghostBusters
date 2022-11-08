@@ -23,15 +23,15 @@ export default class AlugadoValidator {
     ]),
     filmeId: schema.number([
       rules.required(),
-      rules.exists({ table: 'albums', column: 'id' }),
+      rules.exists({ table: 'filmes', column: 'id' }),
     ]),
     funcionarioId: schema.number([
       rules.required(),
-      rules.exists({ table: 'albums', column: 'id' }),
+      rules.exists({ table: 'funcionarios', column: 'id' }),
     ]),
     clienteId: schema.number([
       rules.required(),
-      rules.exists({ table: 'albums', column: 'id' }),
+      rules.exists({ table: 'clientes', column: 'id' }),
     ]),
   })
   

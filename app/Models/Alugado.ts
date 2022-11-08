@@ -38,6 +38,6 @@ export default class Alugado extends BaseModel {
   @belongsTo(() => Cliente)
   public cliente: BelongsTo<typeof Cliente>
 
-  @hasOne(() => Filme)
-  public filme: HasOne<typeof Filme>
+  @belongsTo(() => Filme)
+  public filme: BelongsTo<typeof Filme>
 }

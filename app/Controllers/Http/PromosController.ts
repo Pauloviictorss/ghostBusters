@@ -6,7 +6,6 @@ export default class PromosController {
         const {nome, dataInicio, dataFim} = request.all()
         const promo = Promo.query()
                              .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
-                             .preload('filmes')
 
         if(nome){
             promo.where('nome', nome)

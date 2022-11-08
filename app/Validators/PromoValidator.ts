@@ -19,7 +19,7 @@ export default class PromoValidator {
       format: 'dd-MM-yyyy',
     }, [
       rules.required(),
-      rules.before('today')
+      rules.after('today')
     ]),
     dataFim: schema.date({
       format: 'dd-MM-yyyy',

@@ -7,9 +7,6 @@ export default class ClienteValidator {
   public schema = schema.create({
     nome: schema.string([
       rules.maxLength(50),
-      rules.alpha({
-        allow: ['space']
-      }),
       rules.required(),
     ]),
     cpf: schema.string([
@@ -17,14 +14,13 @@ export default class ClienteValidator {
       rules.unique({ table: 'clientes', column: 'cpf' })
     ]),
     sexo: schema.enum(
-      ['H', 'M'] as const
+      ['F', 'M'] as const
     ),
     telefone: schema.string.optional()
   })
 
   public messages: CustomMessages = {
     'nome.maxLength': 'O nome do cliente não pode ter mais do que {{ options.maxLength }} caracteres.',
-    'nome.alpha': 'Esse campo aceita apenas caracteres não-numéricos. Insira um nome válido.',
     'nome.required': 'Esse campo é obrigatório.',
 
     'cpf.regex': 'O padrão de CPF é 999.999.999-99',

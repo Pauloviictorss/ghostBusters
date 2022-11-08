@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.date('data_lancamento')
       table.integer('promo_id').unsigned().references('id').inTable('promos')
       table.integer('produtora_id').unsigned().references('id').inTable('produtoras')
+      table.integer('alugado_id').unsigned().references('id').inTable('alugados')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

@@ -5,7 +5,7 @@ export default class AlugadosController {
     index({request}){
         const {retirada, entrega, tempoDias} = request.all()
         const alugado = Alugado.query()
-                               .select(['id', 'retirada', 'entrega', 'tempoDias'])
+                               .select(['id', 'retirada', 'entrega', 'tempoDias', 'funcionarioId', 'clienteId', 'filmeId'])
                                .preload('funcionario')
                                .preload('cliente')
                                .preload('filme')

@@ -7,9 +7,6 @@ export default class FuncionarioValidator {
   public schema = schema.create({
     nome: schema.string([
       rules.maxLength(50),
-      rules.alpha({
-        allow: ['space']
-      }),
       rules.required(),
     ]),
     cpf: schema.string([
@@ -22,7 +19,7 @@ export default class FuncionarioValidator {
       rules.required(),
     ]),
     sexo: schema.enum(
-      ['H', 'M'] as const
+      ['F', 'M'] as const
     ),
     cargoId: schema.number([
       rules.exists({ table: 'cargos', column: 'id' })
