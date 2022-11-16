@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, BelongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Cargo from './Cargo'
 import Alugado from './Alugado'
@@ -24,12 +23,6 @@ export default class Funcionario extends BaseModel {
 
   @column()
   public cargoId: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => Cargo)
   public cargo: BelongsTo<typeof Cargo>

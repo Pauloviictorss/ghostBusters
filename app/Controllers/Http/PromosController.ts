@@ -5,7 +5,7 @@ export default class PromosController {
     index({request}){
         const {nome, dataInicio, dataFim} = request.all()
         const promo = Promo.query()
-                             .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
+                           .select(['id', 'nome', 'descricao', 'dias', 'dataInicio', 'dataFim'])
 
         if(nome){
             promo.where('nome', nome)

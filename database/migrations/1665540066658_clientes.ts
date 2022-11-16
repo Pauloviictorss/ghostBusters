@@ -11,11 +11,6 @@ export default class extends BaseSchema {
       table.string('nome', 50).notNullable()
       table.string('telefone')
       table.string('sexo').notNullable()
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 

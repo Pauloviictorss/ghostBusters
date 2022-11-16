@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Promo extends BaseModel {
@@ -22,12 +21,6 @@ export default class Promo extends BaseModel {
 
   @column()
   public dataFim: Date
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => Promo)
   public filmes: BelongsTo<typeof Promo>

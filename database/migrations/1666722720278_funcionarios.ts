@@ -13,11 +13,6 @@ export default class extends BaseSchema {
       table.string('sexo')
       table.string('endereco', 50)
       table.integer('cargo_id').unsigned().references('id').inTable('cargos')
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 

@@ -5,8 +5,8 @@ export default class ArtistasController {
     index({request}){
         const {nome, sexo} = request.all()
         const artista = Artista.query()
-                                .select(['id', 'nome', 'sexo'])
-                                .preload('filmes')
+                               .select(['id', 'nome', 'sexo'])
+                               .preload('filmes')
 
         if(nome){
             artista.where('nome', nome)

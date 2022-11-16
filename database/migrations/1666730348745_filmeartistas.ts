@@ -9,12 +9,7 @@ export default class extends BaseSchema {
 
       table.integer('filme_id').unsigned().references('id').inTable('filmes')
       table.integer('artista_id').unsigned().references('id').inTable('artistas')
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
-    })
+      })
   }
 
   public async down () {

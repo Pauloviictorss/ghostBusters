@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column, hasOne, HasOne, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Categoria from './Categoria'
 import Artista from './Artista'
@@ -27,12 +26,6 @@ export default class Filme extends BaseModel {
 
   @column()
   public produtoraId: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @manyToMany(() => Categoria, {pivotTable: 'categoriafilmes'})
   public categorias: ManyToMany<typeof Categoria>

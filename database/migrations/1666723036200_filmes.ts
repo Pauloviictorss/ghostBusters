@@ -14,11 +14,6 @@ export default class extends BaseSchema {
       table.integer('promo_id').unsigned().references('id').inTable('promos')
       table.integer('produtora_id').unsigned().references('id').inTable('produtoras')
       table.integer('alugado_id').unsigned().references('id').inTable('alugados')
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 
